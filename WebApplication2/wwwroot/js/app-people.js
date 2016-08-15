@@ -4,21 +4,27 @@
      $scope.people = JSON.parse(localStorage.people);
 
      $scope.addPerson = function () {
+          var date = new Date($scope.date);
           // create the person object
           var person = {
                name: $scope.name,
-               day: parseInt($scope.date.substring(8, 10)),
-               month: parseInt($scope.date.substring(5, 7)),
-               year: parseInt($scope.date.substring(0, 4))
+               createdAt: {
+                    day: date.getDate(),
+                    month: date.getMonth(),
+                    year: date.getFullYear(),
+                    mili: date.getTime()
+               }
           };
+
           console.log(person);
+
           // add to people array
           $scope.people.push(person);
 
-          // sort in descending order of date
-          $scope.people.sort(function (a, b) { return a.year - b.year }); // year first
-          $scope.people.sort(function (a, b) { return a.month - b.month }); // month second
-          $scope.people.sort(function (a, b) { return a.day - b.day }); // date third
+          // sort the array
+          $scope.people.sort(function (a, b) {
+               return a.createdAt.mili - b.createdAt.mili;
+          });
 
           // clear the form fields
           $scope.name = "";
