@@ -25,3 +25,12 @@ textarea {
 div[ng-show="people.length <= 0"] p, div[ng-show="people.length <= 0"] a {
      padding: 0 2em 0 2em;
 }
+
+#deleteBtn {
+     color: #A02B33;
+}
+
+#deleteBtn:hover {
+     cursor: pointer;
+     color: #F0414D;
+}

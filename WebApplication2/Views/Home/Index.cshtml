@@ -16,9 +16,11 @@
                     <h1>Add a person</h1>
                </div>
                <form role="form" style="display:inline-block;padding-top: 1em;" ng-submit="addPerson()">
-                    <div class="form-group-lg">
-                         <input type="text" name="name" placeholder="Michael E. Tyson" ng-model="name" class="form-control" style="margin-bottom: .5em;" />
-                         <input type="date" name="date" class="form-control" ng-model="date" />
+                    <div class="form-group-lg" id="field1">
+                         <input type="text" name="name" placeholder="Name" ng-model="name" class="form-control" style="margin-bottom: .5em;" ng-style="nameErrorState()"/>
+                    </div>
+                    <div class="form-group-lg" id="field2">
+                         <input type="date" name="date" class="form-control" ng-model="date" ng-style="dateErrorState()"/>
                     </div>
                     <div style="padding: 1em 0 .5em 0;">
                          <button type="submit" class="btn btn-default" style="width: 8em;">Add to list</button>
@@ -58,7 +60,7 @@
                               </div>
                               <div class="person" ng-repeat="person in people track by $index | orderBy: 'date'">
                                    <div class="col-xs-1" ng-click="deletePerson(person.name,person.date)">
-                                        <span class="text-danger"> X </span>
+                                        <span class="text-danger" id="deleteBtn"> X </span>
                                    </div>
                                    <div class="col-xs-5">
                                         {{person.name}}
