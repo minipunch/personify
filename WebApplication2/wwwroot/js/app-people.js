@@ -6,8 +6,9 @@
      $scope.dateError = false;
 
      $scope.addPerson = function () {
+          console.log(isValidName($scope.name));
           // if input both fields are not empty
-          if ($scope.name && $scope.date) {
+          if ($scope.name && $scope.date && isValidName($scope.name)) {
                var date = new Date($scope.date);
                // create the person object
                var person = {
@@ -16,14 +17,14 @@
                          day: date.getDate(),
                          month: date.getMonth(),
                          year: date.getFullYear(),
-                         mili: date.getTime()
+                         mili: date.getTime() // miliseconds since epoch for date entered (for sorting)
                     }
                };
 
                // add to people array
                $scope.people.push(person);
 
-               // sort the array
+               // sort the array by miliseconds since epoch
                $scope.people.sort(function (a, b) {
                     return a.createdAt.mili - b.createdAt.mili;
                });
@@ -34,7 +35,7 @@
                $scope.nameError = false;
                $scope.dateError = false;
 
-               // check for compatability
+               // check for local storage compatability
                if (typeof (Storage) !== "undefined") {
                     // Store into local storage
                     localStorage.people = JSON.stringify($scope.people);
@@ -43,6 +44,10 @@
                     alert("error: local storage is not working!");
                }
           } else {
+               // if name doesn't match regex
+               if (!isValidName($scope.name)) {
+                    $scope.nameError = setNameError();
+               }
                // both fields empty
                if (!$scope.name && !$scope.date) {
                     $scope.nameError = setNameError();
@@ -51,7 +56,7 @@
                } else if (!$scope.name) {
                     $scope.nameError = setNameError();
                     // date field empty
-               } else {
+               } else if(!$scope.date){
                     $scope.dateError = setDateError();
                }
           }
@@ -66,7 +71,7 @@
      // handle name field error style
      $scope.nameErrorState = function () {
           if ($scope.nameError) {
-               if ($scope.name) {
+               if ($scope.name && isValidName($scope.name)) {
                     $scope.nameError = false;
                     $("input[name='name']").tooltip('disable');
                     return { 'border-color': '#cccccc' };
@@ -91,36 +96,3 @@
                return { 'border-color': 'red' };
      };
 });
-
-function setNameError() {
-     $("input[name='name']").attr('data-toggle', 'tooltip');
-     $("input[name='name']").attr('data-placement', 'right');
-     $("input[name='name']").attr('title', 'Please enter a valid name!');
-     $("input[name='name']").tooltip('enable');
-     return true;
-};
-
-function setDateError() {
-     $("input[name='date']").attr('data-toggle', 'tooltip');
-     $("input[name='date']").attr('data-placement', 'right');
-     $("input[name='date']").attr('title', 'Please enter a valid date!');
-     $("input[name='date']").tooltip('enable');
-     return true;
-};
-
-function deleteFromArray(name,date,array) {
-     var index = 0;
-     // find person with matching properties
-     for (var x = 0; x < array.length; x++) {
-          console.log(array[x].name);
-          if (array[x].name === name && array.date === date) {
-               index = x; // set index of person to delete
-          }
-     }
-     // delete the person at that index fom people array
-     if (index > -1) {
-          array.splice(index, 1);
-     }
-     
-     return array;
-};

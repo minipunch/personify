@@ -15,7 +15,7 @@ namespace WebApplication2.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Personify description";
+            ViewData["name"] = "Josh Yolles";
 
             return View();
         }

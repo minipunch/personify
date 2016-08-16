@@ -34,3 +34,10 @@ div[ng-show="people.length <= 0"] p, div[ng-show="people.length <= 0"] a {
      cursor: pointer;
      color: #F0414D;
 }
+
+/* fix column layout when on smartphones */
+@media only screen and (max-width: 500px) {
+    .modal-body div {
+         padding: 0;
+    }
+}

@@ -17,7 +17,7 @@
                </div>
                <form role="form" style="display:inline-block;padding-top: 1em;" ng-submit="addPerson()">
                     <div class="form-group-lg" id="field1">
-                         <input type="text" name="name" placeholder="Name" ng-model="name" class="form-control" style="margin-bottom: .5em;" ng-style="nameErrorState()"/>
+                         <input type="text" name="name" placeholder="Name" ng-model="name" class="form-control" style="margin-bottom: .5em;" ng-style="nameErrorState()" minlength="2"/>
                     </div>
                     <div class="form-group-lg" id="field2">
                          <input type="date" name="date" class="form-control" ng-model="date" ng-style="dateErrorState()"/>
@@ -33,7 +33,7 @@
      </div>
 
      <!-- Modal -->
-     <div class="modal fade" id="personModal" role="dialog">
+     <div class="modal fade" id="personModal" role="dialog" data-backdrop="static" data-keyboard="false">
           <div class="modal-dialog">
 
                <!-- Modal content-->
