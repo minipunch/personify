@@ -1,9 +1,17 @@
 ﻿app.controller('peopleCtrl', function ($scope) {
      $scope.name = "";
      $scope.date = "";
-     $scope.people = JSON.parse(localStorage.people);
      $scope.nameError = false;
      $scope.dateError = false;
+     $scope.people = [];
+     var tempPeople = JSON.parse(localStorage.people || "null");
+     if (!tempPeople) {
+          console.log("no people");
+     }
+     else {
+          console.log("people");
+          $scope.people = tempPeople;
+     }
 
      $scope.addPerson = function () {
           console.log(isValidName($scope.name));
